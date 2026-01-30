@@ -21,28 +21,26 @@ export default function MonthCard({
   onDayClick,
   events = []
 }) {
+
+  // Parse seguro de data local (YYYY-MM-DD)
+  function parseLocalDate(dateString) {
+    const [y, m, d] = dateString.split("-").map(Number)
+    return { year: y, month: m - 1, day: d }
+  }
+
   function getEventsForDay(year, month, day) {
     if (!day) return []
 
     return events.filter(event => {
-      const eventDate = new Date(event.start)
-
-      return (
-        eventDate.getFullYear() === year &&
-        eventDate.getMonth() === month &&
-        eventDate.getDate() === day
-      )
+      const { year: y, month: m, day: d } = parseLocalDate(event.date)
+      return y === year && m === month && d === day
     })
   }
 
   // Eventos apenas deste mês
   const monthEvents = events.filter(event => {
-    const eventDate = new Date(event.start)
-
-    return (
-      eventDate.getFullYear() === year &&
-      eventDate.getMonth() === month
-    )
+    const { year: y, month: m } = parseLocalDate(event.date)
+    return y === year && m === month
   })
 
   const days = getMonthDays(year, month)
@@ -69,7 +67,7 @@ export default function MonthCard({
 
           return (
             <div
-              key={i}
+              key={`${year}-${month}-${i}`}
               onClick={() => day && onDayClick(new Date(year, month, day))}
               className={`h-10 flex flex-col items-center justify-center rounded cursor-pointer
                 ${day ? "hover:bg-orange-200" : ""}
@@ -115,6 +113,7 @@ export default function MonthCard({
     </div>
   )
 }
+
 
 
 

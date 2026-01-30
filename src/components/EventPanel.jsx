@@ -101,17 +101,6 @@ export default function EventPanel({ date, person, onClose }) {
           />
         </div>
 
-        <div>
-          <span className="text-sm">Fim:</span>
-          <input
-            type="date"
-            value={endDate}
-            min={startDate}
-            onChange={e => setEndDate(e.target.value)}
-            className="w-full p-3 rounded bg-gray-200"
-          />
-        </div>
-
         <label className="flex items-center gap-3 text-sm">
           <input
             type="checkbox"

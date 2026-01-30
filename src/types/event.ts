@@ -1,8 +1,7 @@
 export type Event = {
-    id: number
-    name: string
-    obs: string
-    start: Date
-    end: Date
-    type: "sector" | "personal"
+  id: number
+  name: string
+  obs: string
+  date: string
+  type: "sector" | "personal"
 }

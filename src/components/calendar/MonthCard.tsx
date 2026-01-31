@@ -1,34 +1,40 @@
+import { Event } from "../../types/event"
 import { getMonthDays } from "../../utils/calendar"
 
 const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"]
 
-// Mapeamento de cores por tipo de evento
 const eventColorMap = {
   personal: "bg-blue-500",
   sector: "bg-orange-500"
 }
 
-// Rótulos amigáveis para exibição
 const eventTypeLabelMap = {
   personal: "Pessoal",
   sector: "Setor"
+}
+
+type Props = {
+  year: number
+  month: number
+  monthName: string
+  events: Event[]
+  onDayClick: (date: Date) => void
 }
 
 export default function MonthCard({
   year,
   month,
   monthName,
-  onDayClick,
-  events = []
-}) {
+  events,
+  onDayClick
+}: Props) {
 
-  // Parse seguro de data local (YYYY-MM-DD)
-  function parseLocalDate(dateString) {
+  function parseLocalDate(dateString: string) {
     const [y, m, d] = dateString.split("-").map(Number)
     return { year: y, month: m - 1, day: d }
   }
 
-  function getEventsForDay(year, month, day) {
+  function getEventsForDay(day: number | null) {
     if (!day) return []
 
     return events.filter(event => {
@@ -37,7 +43,6 @@ export default function MonthCard({
     })
   }
 
-  // Eventos apenas deste mês
   const monthEvents = events.filter(event => {
     const { year: y, month: m } = parseLocalDate(event.date)
     return y === year && m === month
@@ -51,7 +56,7 @@ export default function MonthCard({
         {monthName} <span className="text-sm text-gray-500">{year}</span>
       </h3>
 
-      {/* Cabeçalho dias da semana */}
+      {/* Dias da semana */}
       <div className="grid grid-cols-7 gap-1 text-xs text-gray-500 mb-1">
         {weekDays.map((d, i) => (
           <div key={i} className="h-7 flex items-center justify-center">
@@ -60,10 +65,10 @@ export default function MonthCard({
         ))}
       </div>
 
-      {/* Dias */}
+      {/* Dias do mês */}
       <div className="grid grid-cols-7 gap-1 text-sm">
         {days.map((day, i) => {
-          const dayEvents = getEventsForDay(year, month, day)
+          const dayEvents = getEventsForDay(day)
 
           return (
             <div
@@ -73,14 +78,13 @@ export default function MonthCard({
                 ${day ? "hover:bg-orange-200" : ""}
               `}
             >
-              {day && <span className="text-sm">{day}</span>}
+              {day && <span>{day}</span>}
 
-              {/* Indicadores de eventos no dia */}
               {dayEvents.length > 0 && (
                 <div className="flex gap-1 mt-0.5">
-                  {dayEvents.slice(0, 3).map((event, idx) => (
+                  {dayEvents.slice(0, 3).map(event => (
                     <span
-                      key={idx}
+                      key={event.id}
                       className={`w-1.5 h-1.5 rounded-full ${eventColorMap[event.type]}`}
                     />
                   ))}
@@ -91,7 +95,7 @@ export default function MonthCard({
         })}
       </div>
 
-      {/* Lista de eventos do mês */}
+      {/* Lista de eventos do mês (como antes) */}
       {monthEvents.length > 0 && (
         <div className="mt-4 space-y-2">
           {monthEvents.map(event => (
@@ -113,6 +117,7 @@ export default function MonthCard({
     </div>
   )
 }
+
 
 
 

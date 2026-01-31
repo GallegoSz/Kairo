@@ -6,6 +6,11 @@ type Props = {
   nextEvent: Event | null
 }
 
+function parseLocalDate(dateString: string) {
+  const [y, m, d] = dateString.split("-").map(Number)
+  return new Date(y, m - 1, d)
+}
+
 const ScheduledEvents = ({ lastEvent, nextEvent }: Props) => {
   const today = new Date().toLocaleDateString("pt-BR", {
     weekday: "long",
@@ -28,7 +33,7 @@ const ScheduledEvents = ({ lastEvent, nextEvent }: Props) => {
           <h3>ÚLTIMO EVENTO</h3>
           <h4 className="font-light">
             {lastEvent
-              ? new Date(lastEvent.date).toLocaleDateString("pt-BR")
+              ? parseLocalDate(lastEvent.date).toLocaleDateString("pt-BR")
               : "--"}
           </h4>
         </div>
@@ -42,7 +47,7 @@ const ScheduledEvents = ({ lastEvent, nextEvent }: Props) => {
           <h3>PRÓXIMO EVENTO</h3>
           <h4 className="font-light">
             {nextEvent
-              ? new Date(nextEvent.date).toLocaleDateString("pt-BR")
+              ? parseLocalDate(nextEvent.date).toLocaleDateString("pt-BR")
               : "--"}
           </h4>
         </div>
@@ -55,3 +60,4 @@ const ScheduledEvents = ({ lastEvent, nextEvent }: Props) => {
 }
 
 export default ScheduledEvents
+

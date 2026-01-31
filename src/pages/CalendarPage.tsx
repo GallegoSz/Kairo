@@ -20,6 +20,20 @@ export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear())
   const [selectedDate, setSelectedDate] = useState(null)
 
+  const today = new Date()
+
+  const sortedEvents = [...events].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  )
+
+  const lastEvent = sortedEvents
+    .filter(event => new Date(event.date) < today)
+    .at(-1) || null
+
+  const nextEvent = sortedEvents
+    .find(event => new Date(event.date) > today) || null
+
+
   return (
     <div className="flex flex-1 relative">
       <div className="flex-1 p-4 md:p-8">
@@ -29,7 +43,11 @@ export default function CalendarPage() {
           onNext={() => setYear(y => y + 1)}
         />
 
-        <ScheduledEvents />
+        <ScheduledEvents
+          lastEvent={lastEvent}
+          nextEvent={nextEvent}
+        />
+
         <TypeEvent />
 
         <CalendarYear

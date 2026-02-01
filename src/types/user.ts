@@ -3,6 +3,7 @@ export type User = {
     name: string
     email: string
     company: string
+    companyId: number
     sector: string
     position: string
     managerId?: number | null 

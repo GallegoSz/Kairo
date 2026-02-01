@@ -1,28 +1,30 @@
 import { useEffect, useState } from "react"
 import {
-  User,
-  Clipboard,
   Mail,
   Warehouse,
-  Building2
+  UserStar,
+  Building2,
+  ContactRound
 } from "lucide-react"
 
-import { getUsers } from "../services/users.service"
-import { User as UserType } from "../types/user"
+import { getCompanys } from "../services/companys.service"
+import { Company } from "../types/company"
 import InfoCard from "../components/InfoCard"
 import { initials } from "../utils/initials"
 
 
-const USER_ID = 1
+const USER_ADMIN_ID = 1
 
-export default function AccountPage() {
-  const [user, setUser] = useState<UserType | null>(null)
+export default function CompanyPage() {
+  const [company, setCompany] = useState<Company | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getUsers().then(users => {
-      const foundUser = users.find(u => u.id === USER_ID) || null
-      setUser(foundUser)
+    getCompanys().then(companys => {
+      const foundCompany =
+        companys.find(c => c.userAdmin === USER_ADMIN_ID) || null
+
+      setCompany(foundCompany)
       setLoading(false)
     })
   }, [])
@@ -31,8 +33,8 @@ export default function AccountPage() {
     return <div className="p-8 text-center">Carregando...</div>
   }
 
-  if (!user) {
-    return <div className="p-8 text-center">Usuário não encontrado</div>
+  if (!company) {
+    return <div className="p-8 text-center">Empresa não encontrada</div>
   }
 
   return (
@@ -40,7 +42,9 @@ export default function AccountPage() {
       <div className="p-8 w-full max-w-6xl">
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-4">
-          <h3 className="font-bold text-lg">Conta {user.company}</h3>
+          <h3 className="font-bold text-lg">
+            Empresa {company.name}
+          </h3>
 
           <button className="bg-[#EF7F27] px-8 py-2 rounded-full text-white font-medium hover:opacity-90 transition">
             Deslogar
@@ -53,14 +57,16 @@ export default function AccountPage() {
 
             <div className="w-32 h-32 rounded-full bg-[#EF7F27] flex items-center justify-center shadow">
               <span className="text-white font-bold text-3xl">
-                {initials(user.name)}
+                {initials(company.name)}
               </span>
             </div>
 
-            <span className="font-bold text-xl">{user.name}</span>
+            <span className="font-bold text-xl">
+              {company.name}
+            </span>
 
             <span className="text-gray-400 text-sm truncate">
-              {user.email}
+              {company.email}
             </span>
 
             <span className="text-gray-400 text-sm">
@@ -68,7 +74,15 @@ export default function AccountPage() {
               <span className="text-[#EF7F27] font-bold hover:opacity-60 cursor-pointer">
                 aqui
               </span>{" "}
-              para atualizar seus dados cadastrais.
+              para atualizar os dados cadastrais da empresa.
+            </span>
+
+            <span className="text-gray-400 text-sm">
+              Clique{" "}
+              <span className="text-[#EF7F27] font-bold hover:opacity-60 cursor-pointer">
+                aqui
+              </span>{" "}
+              para adicionar ou remover um funcionário.
             </span>
           </div>
 
@@ -76,10 +90,10 @@ export default function AccountPage() {
 
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-gray-900">
-                Informações pessoais
+                Informações cadastrais da empresa
               </h1>
               <p className="text-gray-400 text-sm">
-                Visualize seus dados cadastrais
+                Visualize os dados da empresa
               </p>
             </div>
 
@@ -87,32 +101,32 @@ export default function AccountPage() {
 
               <InfoCard
                 label="Nome"
-                value={user.name}
-                icon={User}
-              />
-
-              <InfoCard
-                label="Email"
-                value={user.email}
-                icon={Mail}
-              />
-
-              <InfoCard
-                label="Empresa"
-                value={user.company}
+                value={company.name}
                 icon={Building2}
               />
 
               <InfoCard
+                label="Email"
+                value={company.email}
+                icon={Mail}
+              />
+
+              <InfoCard
+                label="Administrador"
+                value={`Usuário #${company.userAdmin}`}
+                icon={UserStar}
+              />
+
+              <InfoCard
                 label="Setor"
-                value={user.sector}
+                value={company.sector}
                 icon={Warehouse}
               />
 
               <InfoCard
-                label="Cargo"
-                value={user.position}
-                icon={Clipboard}
+                label="Funcionários cadastrados"
+                value="7"
+                icon={ContactRound}
               />
 
             </div>
@@ -122,7 +136,3 @@ export default function AccountPage() {
     </div>
   )
 }
-
-
-
-

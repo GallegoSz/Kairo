@@ -1,7 +1,6 @@
 export type Company = {
     name: string
     email: string
-    admin: string
+    userAdmin: number
     sector: string
-    cnpj: string
 }

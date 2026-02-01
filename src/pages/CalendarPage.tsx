@@ -76,7 +76,7 @@ export default function CalendarPage() {
           <div className="sticky top-8">
             <EventPanel
               date={selectedDate}
-              person={`Usuário ${loggedUserId}`}
+              person={loggedUserId}
               onClose={() => setSelectedDate(null)}
             />
           </div>
@@ -92,7 +92,7 @@ export default function CalendarPage() {
           <div className="fixed right-0 top-0 bottom-0 z-50 md:hidden">
             <EventPanel
               date={selectedDate}
-              person={`Usuário ${loggedUserId}`}
+              person={loggedUserId}
               onClose={() => setSelectedDate(null)}
             />
           </div>

@@ -12,6 +12,7 @@ import NotificationsPage from "./pages/NotificationsPage"
 import FormLayout from "./layouts/FormLayout"
 import AccountFormPage from "./pages/AccountFormPage"
 import CompanyFormPage from "./pages/CompanyFormPage"
+import EmployeePage from "./pages/EmployeeFormPage"
 
 export default function App() {
   return (
@@ -31,10 +32,8 @@ export default function App() {
 
       <Route element={<FormLayout />}>
         <Route path="/conta/dados" element={<AccountFormPage />} />
-      </Route>
-
-      <Route element={<FormLayout />}>
         <Route path="/empresa/dados" element={<CompanyFormPage />} />
+        <Route path="/empresa/funcionarios" element={<EmployeePage />} />
       </Route>
 
 

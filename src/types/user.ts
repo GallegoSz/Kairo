@@ -2,7 +2,6 @@ export type User = {
     id: number
     name: string
     email: string
-    company: string
     companyId: number
     sector: string
     position: string

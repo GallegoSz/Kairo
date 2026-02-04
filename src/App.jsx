@@ -29,7 +29,7 @@ export default function App() {
       </Route>
 
       <Route element={<FormLayout />}>
-        <Route path="/conta/editar" element={<AccountFormPage />} />
+        <Route path="/conta/dados" element={<AccountFormPage />} />
       </Route>
 
     </Routes>

@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage"
 import AccountPage from "./pages/AccountPage"
 import CompanyPage from "./pages/CompanyPage"
 import NotificationsPage from "./pages/NotificationsPage"
+import FormLayout from "./layouts/FormLayout"
+import AccountFormPage from "./pages/AccountFormPage"
 
 export default function App() {
   return (
@@ -24,6 +26,10 @@ export default function App() {
 
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
+      </Route>
+
+      <Route element={<FormLayout />}>
+        <Route path="/conta/editar" element={<AccountFormPage />} />
       </Route>
 
     </Routes>

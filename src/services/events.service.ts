@@ -1,71 +1,150 @@
 import { Event } from "../types/event"
 
 let eventsMock: Event[] = [
-  // Empresa 1
   {
     id: 1,
     userId: 1,
     companyId: 1,
-    name: "Sociodigital",
-    obs: "Ir a aula",
-    date: "2026-09-13",
+    name: "Entrega de Relatório Financeiro",
+    obs: "Consolidar receitas, despesas e fluxo de caixa do mês.",
+    date: "2026-01-10",
     type: "personal"
   },
   {
     id: 2,
-    userId: null,
+    userId: 1,
     companyId: 1,
-    name: "Festa da empresa",
-    obs: "Comemorar muito a festa",
-    date: "2026-02-11",
-    type: "sector"
+    name: "Reunião de Alinhamento com Diretoria",
+    obs: "Apresentar indicadores e metas do trimestre.",
+    date: "2026-01-22",
+    type: "personal"
   },
   {
     id: 3,
-    userId: 1,
+    userId: 2,
     companyId: 1,
-    name: "Fazer o relatório",
-    obs: "O mais rápido possível",
-    date: "2026-02-11",
+    name: "Revisão de Contratos com Fornecedores",
+    obs: "Analisar cláusulas de reajuste e prazos.",
+    date: "2026-01-15",
     type: "personal"
   },
   {
     id: 4,
-    userId: null,
+    userId: 2,
     companyId: 1,
-    name: "Reunião geral",
-    obs: "Prestar atenção",
-    date: "2026-02-11",
-    type: "sector"
+    name: "Auditoria Interna de Processos",
+    obs: "Verificar conformidade com políticas internas.",
+    date: "2026-01-28",
+    type: "personal"
   },
   {
     id: 5,
     userId: 3,
     companyId: 1,
-    name: "Reunião individual",
-    obs: "Prestar atenção",
-    date: "2026-02-11",
+    name: "Planejamento de Campanha Institucional",
+    obs: "Definir cronograma e orçamento da campanha.",
+    date: "2026-01-12",
     type: "personal"
   },
-  // Empresa 2 (isolada, nunca aparece para usuários da empresa 1)
   {
     id: 6,
-    userId: 10,
-    companyId: 2,
-    name: "Evento da empresa 2",
-    obs: "Só aparece para empresa 2",
-    date: "2026-02-11",
+    userId: 3,
+    companyId: 1,
+    name: "Análise de Métricas de Desempenho",
+    obs: "Avaliar KPIs e propor melhorias.",
+    date: "2026-01-25",
     type: "personal"
   },
   {
     id: 7,
-    userId: null,
-    companyId: 2,
-    name: "Reunião empresa 2",
-    obs: "Só aparece para empresa 2",
-    date: "2026-03-15",
-    type: "sector"
-  }
+    userId: 1,
+    companyId: 1,
+    name: "Fechamento Contábil",
+    obs: "Finalizar balanço mensal e enviar para contabilidade externa.",
+    date: "2026-02-09",
+    type: "personal"
+  },
+  {
+    id: 8,
+    userId: 1,
+    companyId: 1,
+    name: "Reunião de Avaliação de Desempenho",
+    obs: "Discutir resultados individuais e metas.",
+    date: "2026-02-20",
+    type: "personal"
+  },
+  {
+    id: 9,
+    userId: 2,
+    companyId: 1,
+    name: "Atualização de Políticas Internas",
+    obs: "Revisar normas conforme novas diretrizes legais.",
+    date: "2026-02-11",
+    type: "personal"
+  },
+  {
+    id: 10,
+    userId: 2,
+    companyId: 1,
+    name: "Reunião com Consultoria Jurídica",
+    obs: "Alinhar questões contratuais estratégicas.",
+    date: "2026-02-23",
+    type: "personal"
+  },
+  {
+    id: 11,
+    userId: 3,
+    companyId: 1,
+    name: "Planejamento de Conteúdo Corporativo",
+    obs: "Definir pautas institucionais do trimestre.",
+    date: "2026-02-08",
+    type: "personal"
+  },
+  {
+    id: 12,
+    userId: 3,
+    companyId: 1,
+    name: "Relatório de Performance de Projetos",
+    obs: "Compilar dados e apresentar à gerência.",
+    date: "2026-02-26",
+    type: "personal"
+  },
+  {
+  id: 13,
+  userId: null,
+  companyId: 1,
+  name: "Reunião do Setor Financeiro",
+  obs: "Analisar fluxo de caixa e projeções para o próximo trimestre.",
+  date: "2026-03-05",
+  type: "sector"
+},
+{
+  id: 14,
+  userId: null,
+  companyId: 1,
+  name: "Planejamento Estratégico do Setor Comercial",
+  obs: "Definir metas de vendas e estratégias de captação de clientes.",
+  date: "2026-04-12",
+  type: "sector"
+},
+{
+  id: 15,
+  userId: null,
+  companyId: 1,
+  name: "Revisão de Processos do Setor Operacional",
+  obs: "Mapear gargalos e propor melhorias de eficiência.",
+  date: "2026-05-18",
+  type: "sector"
+},
+{
+  id: 16,
+  userId: null,
+  companyId: 1,
+  name: "Treinamento Técnico do Setor de TI",
+  obs: "Atualização sobre novas ferramentas e protocolos de segurança.",
+  date: "2026-06-25",
+  type: "sector"
+}
 ]
 
 export async function getEvents(userId: number, companyId: number): Promise<Event[]> {

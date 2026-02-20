@@ -4,11 +4,13 @@ import YearSelector from "../components/YearSelector"
 import EventPanel from "../components/EventPanel"
 import ScheduledEvents from "../components/ScheduledEvents"
 import { getUsers } from "../services/users.service"
-import { getEvents } from "../services/events.service"
+import { getAllEventsByCompany } from "../services/events.service"
 import { User } from "../types/user"
 import { Event } from "../types/event"
 
 export default function AssignPage() {
+  const loggedCompanyId = 1 // dps vira auth/session
+
   const [users, setUsers] = useState<User[]>([])
   const [events, setEvents] = useState<Event[]>([])
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
@@ -20,19 +22,21 @@ export default function AssignPage() {
 
   useEffect(() => {
     getUsers().then(setUsers)
-    getEvents().then(setEvents)
+    getAllEventsByCompany(loggedCompanyId).then(setEvents)
   }, [])
 
-  const employees = users.filter(u => !u.isAdmin)
+  const employees = users.filter(
+    u => !u.isAdmin && u.companyId === loggedCompanyId
+  )
 
-  // 🔥 EVENTOS DO USUÁRIO SELECIONADO
+  const today = new Date()
+
   const selectedUserEvents = useMemo(() => {
     if (!selectedUser) return []
-    return events.filter(e => e.userId === selectedUser.id)
+    return events.filter(
+      e => e.userId === selectedUser.id || e.type === "sector"
+    )
   }, [events, selectedUser])
-
-  // 🔥 ÚLTIMO E PRÓXIMO EVENTO (por usuário)
-  const today = new Date()
 
   const sortedEvents = [...selectedUserEvents].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -53,7 +57,9 @@ export default function AssignPage() {
       .toUpperCase()
   }
 
-  const selectedEventUser = eventContext ? users.find(u => u.id === eventContext.userId): null
+  const selectedEventUser = eventContext
+    ? users.find(u => u.id === eventContext.userId)
+    : null
 
   return (
     <div className="flex gap-6 p-8 relative">
@@ -71,14 +77,10 @@ export default function AssignPage() {
               key={user.id}
               className="bg-white rounded-2xl shadow transition-all"
             >
-              {/* HEADER */}
               <div
                 className="flex p-5 cursor-pointer items-center"
-                onClick={() =>
-                  setSelectedUser(isOpen ? null : user)
-                }
+                onClick={() => setSelectedUser(isOpen ? null : user)}
               >
-                {/* INICIAIS */}
                 <div
                   className={`flex items-center justify-center rounded-full bg-orange-500 text-white font-bold shadow transition-all
                     ${isOpen ? "w-16 h-16 text-lg" : "w-24 h-24 text-2xl"}`}
@@ -106,7 +108,6 @@ export default function AssignPage() {
                 </div>
               </div>
 
-              {/* CONTEÚDO */}
               {isOpen && (
                 <div className="border-t border-orange-500 px-5 pb-5 animate-fadeIn">
                   <div className="mt-6 space-y-4">
@@ -136,7 +137,6 @@ export default function AssignPage() {
         })}
       </div>
 
-      {/* EVENT PANEL */}
       {eventContext && (
         <div className="hidden md:block w-96">
           <div className="sticky top-8">

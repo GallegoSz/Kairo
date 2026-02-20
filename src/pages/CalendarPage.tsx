@@ -11,7 +11,8 @@ import { Event } from "../types/event"
 
 export default function CalendarPage() {
 
-  const loggedUserId = 1 // dps vira auth/session
+  const loggedUserId = 1    // dps vira auth/session
+  const loggedCompanyId = 1 // dps vira auth/session
 
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
@@ -19,19 +20,15 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
   useEffect(() => {
-    getEvents().then(data => {
+    getEvents(loggedUserId, loggedCompanyId).then(data => {
       setEvents(data)
       setLoading(false)
     })
   }, [])
 
-  const userEvents = events.filter(
-    event => event.userId === loggedUserId
-  )
-
   const today = new Date()
 
-  const sortedEvents = [...userEvents].sort(
+  const sortedEvents = [...events].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   )
 
@@ -67,7 +64,7 @@ export default function CalendarPage() {
         <CalendarYear
           year={year}
           onDayClick={setSelectedDate}
-          events={userEvents}
+          events={events}
         />
       </div>
 

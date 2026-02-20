@@ -1,6 +1,7 @@
 export type Event = {
   id: number
-  userId: number
+  userId: number | null
+  companyId: number
   name: string
   obs: string
   date: string

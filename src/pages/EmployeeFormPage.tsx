@@ -1,22 +1,7 @@
 import { useEffect, useState } from "react"
 import { getUsers } from "../services/users.service"
-import { User } from "../types/user"
+import { User, CreateUserDTO } from "../types/user"
 
-/**
- * DTO de criação (estado de formulário)
- * NÃO é a entidade User
- */
-type CreateUserDTO = {
-  name: string
-  email: string
-  sector: string
-  position: string
-}
-
-/**
- * Simulação de empresa logada
- * (isso normalmente viria de contexto/auth)
- */
 const COMPANY_ID = 1
 
 export default function EmployeePage() {
@@ -45,9 +30,6 @@ export default function EmployeePage() {
     }))
   }
 
-  /**
-   * Bloqueia submit se qualquer campo estiver vazio
-   */
   const isFormInvalid = Object.values(form).some(
     (value) => value.trim() === ""
   )
@@ -68,7 +50,6 @@ export default function EmployeePage() {
 
     setUsers((prev) => [...prev, newUser])
 
-    // reset do formulário
     setForm({
       name: "",
       email: "",
@@ -91,7 +72,6 @@ export default function EmployeePage() {
 
   return (
     <div className="w-full max-w-3xl backdrop-blur-xl bg-white p-8 rounded-2xl shadow-2xl space-y-8">
-      {/* FORMULÁRIO */}
       <div>
         <h1 className="text-2xl font-semibold text-center text-gray-800 mb-1">
           Usuários do sistema
@@ -155,7 +135,6 @@ export default function EmployeePage() {
         </form>
       </div>
 
-      {/* LISTA */}
       <div className="space-y-4">
         {loading && (
           <p className="text-center text-sm text-gray-400">
